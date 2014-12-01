@@ -82,6 +82,25 @@ sub eliminate_solutions {
     $y_lines_ref;
 }
 
+sub need_more_iterations {
+    my $y_lines_ref = shift;
+    my @y_lines     = @$y_lines_ref;
+
+    my $need_iteration = 0;
+
+    for my $i ( 0 .. $#y_lines ) {
+        my $x_lines_ref = $y_lines[ $i ];
+        my @x_lines     = @$x_lines_ref;
+        for my $j ( 0 .. $#x_lines ) {
+            if( $x_lines[ $j ] eq "*" ) {
+                return 1;
+            }
+        }
+    }
+
+    return 0;
+}
+
 sub find_occurence_of {
     my $array_ref = shift;
     my $element   = shift;
