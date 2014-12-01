@@ -20,6 +20,7 @@ for my $i( 0 .. $x - 1 ) {
 my $solutions_ref = initialize_three_d_array_of_solutions( $x, $y );
 
 @y_lines = @{eliminate_solutions( $x, $y, $solutions_ref, \@y_lines )};@y_lines = @{eliminate_solutions( $x, $y, $solutions_ref, \@y_lines )};
+print_solution( \@y_lines );
 
 sub prompt {
     my $message = shift;
@@ -27,6 +28,21 @@ sub prompt {
     my $var = <STDIN>;
     $var =~ s/\s//;
     return $var;
+}
+
+sub print_solution {
+    my $y_lines_ref = shift;
+    my @y_lines     = @$y_lines_ref;
+
+    print "\n";
+    for my $i ( 0 .. $#y_lines ) {
+        my $x_lines_ref = $y_lines[ $i ];
+        my @x_lines     = @$x_lines_ref;
+        for my $j ( 0 .. $#x_lines ) {
+            print $x_lines[ $j ]. " ";
+        }
+        print "\n";
+    }
 }
 
 sub initialize_three_d_array_of_solutions {
