@@ -19,7 +19,7 @@ for my $i( 0 .. $x - 1 ) {
 
 my $solutions_ref = initialize_three_d_array_of_solutions( $x, $y );
 
-@y_lines = @{eliminate_solutions( $x, $y, $solutions_ref, \@y_lines )};@y_lines = @{eliminate_solutions( $x, $y, $solutions_ref, \@y_lines )};
+@y_lines = @{eliminate_solutions( $x, $y, $solutions_ref, \@y_lines )};
 print_solution( \@y_lines );
 
 sub prompt {
