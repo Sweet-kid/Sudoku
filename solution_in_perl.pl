@@ -19,6 +19,8 @@ for my $i( 0 .. $x - 1 ) {
 
 my $solutions_ref = initialize_three_d_array_of_solutions( $x, $y );
 
+@y_lines = @{eliminate_solutions( $x, $y, $solutions_ref, \@y_lines )};@y_lines = @{eliminate_solutions( $x, $y, $solutions_ref, \@y_lines )};
+
 sub prompt {
     my $message = shift;
     print "\n$message : ";
@@ -40,6 +42,57 @@ sub initialize_three_d_array_of_solutions {
         $y_lines[ $i ] = \@x_lines;
     }
     return \@y_lines;
+}
+
+sub eliminate_solutions {
+    my $x = shift;
+    my $y = shift;
+    my $solutions_ref = shift;
+    my @solutions     = @$solutions_ref;
+    my $y_lines_ref = shift;
+    my @y_lines     = @$y_lines_ref;
+
+    while( need_more_iterations( $y_lines_ref ) ) {
+        foreach my $i ( 0 .. $y - 1 ) {
+            my $x_lines_ref = $y_lines[ $i ];
+            my @x_lines     = @$x_lines_ref;
+            foreach my $j ( 0 .. $x - 1 ) {
+                if( $x_lines[ $j ] eq "*" ) {
+                    my @solution = @{$solutions[ $i ]->[ $j ]};
+                    my $loop_var = @solution;
+                    my @temp_solution = @solution;
+                    foreach my $element ( @temp_solution ) {
+                        if( is_present_horizontally( $element, $y_lines_ref, $x, $y, $i, $j ) ||
+                            is_present_vertically( $element, $y_lines_ref, $x, $y, $i, $j ) ||
+                            is_present_in_the_block_of_3( $element, $y_lines_ref, $x, $y, $i, $j )) {
+                            my $occurence = find_occurence_of( \@solution, $element );
+                            splice( @solution, $occurence, 1 );
+                        }
+                    }
+                    if( scalar @solution == 1 ) {
+                        $x_lines[ $j ] = $solution[ 0 ];
+                    }
+                    $solutions[ $i ]->[ $j ] = \@solution;
+                }
+            }
+            $y_lines[ $i ] = \@x_lines;
+            $y_lines_ref = \@y_lines;
+        }
+    }
+    $y_lines_ref;
+}
+
+sub find_occurence_of {
+    my $array_ref = shift;
+    my $element   = shift;
+
+    my @array = @$array_ref;
+
+    for my $i ( 0 .. $#array ) {
+        if( $array[ $i ] eq $element ) {
+            return $i;
+        }
+    }
 }
 
 sub test_is_present_horizontally {
