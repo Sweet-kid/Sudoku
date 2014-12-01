@@ -41,3 +41,42 @@ sub initialize_three_d_array_of_solutions {
     }
     return \@y_lines;
 }
+
+sub test_is_present_horizontally {
+    my $array_ref = [
+        [ 1, 2, 3, 4 ],
+        [ 5, 6, 7, 8 ],
+        [ 9, 10, 11, 12 ],
+        [ 13, 14, 15, 16 ]
+        ];
+
+    if( is_present_horizontally( 4, $array_ref, 4, 4, 0, 0 ) ) {
+        print "4 is present horizontally to (0, 0)\n";
+    } else {
+        print "4 is not present horizontally to (0, 0)\n";
+    }
+    if( is_present_horizontally( 4, $array_ref, 4, 4, 1, 1 ) ) {
+        print "4 is present horizontally to (1, 1)\n";
+    } else {
+        print "4 is not present horizontally to (1, 1)\n";
+    }
+}
+
+sub is_present_horizontally {
+    my $number      = shift;
+    my $y_lines_ref = shift;
+    my $x           = shift;
+    my $y           = shift;
+    my $i           = shift;
+    my $j           = shift;
+
+    my @y_lines     = @$y_lines_ref;
+    my $x_array_ref = $y_lines[ $i ];
+    my @x_array     = @$x_array_ref;
+
+    if( grep { $_ eq $number } @x_array ) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
