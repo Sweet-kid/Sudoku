@@ -80,3 +80,41 @@ sub is_present_horizontally {
         return 0;
     }
 }
+
+sub test_is_present_vertically {
+    my $array_ref = [
+        [ 1, 2, 3, 4 ],
+        [ 5, 6, 7, 8 ],
+        [ 9, 10, 11, 12 ],
+        [ 13, 14, 15, 16 ]
+        ];
+
+    if( is_present_vertically( 4, $array_ref, 4, 4, 3, 3 ) ) {
+        print "4 is present vertically to (3, 3)\n";
+    } else {
+        print "4 is not present vertically to (3, 3)\n";
+    }
+    if( is_present_vertically( 4, $array_ref, 4, 4, 2, 2 ) ) {
+        print "4 is present vertically to (2, 2)\n";
+    } else {
+        print "4 is not present vertically to (2, 2)\n";
+    }
+}
+
+sub is_present_vertically {
+    my $number      = shift;
+    my $y_lines_ref = shift;
+    my $x           = shift;
+    my $y           = shift;
+    my $i           = shift;
+    my $j           = shift;
+
+    my @y_lines     = @$y_lines_ref;
+
+    for my $index( 0 .. $y - 1 ) {
+        if( $y_lines[ $index ]->[ $j ] eq $number ) {
+            return 1;
+        }
+    }
+    return 0;
+}
